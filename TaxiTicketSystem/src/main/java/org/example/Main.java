@@ -52,12 +52,12 @@ public class Main {
         System.out.println();
         printTicket(ticketService, formatter, "PUNE", "DELHI", 4);
         // traveller count 0 error
-//        printTicket(ticketService, formatter, "MUMBAI", "GOA", 0);
+        printTicket(ticketService, formatter, "MUMBAI", "GOA", 0);
         System.out.println();
         // NULL source
 //        printTicket(ticketService, formatter, null, "GOA", 8);
         System.out.println();
         // Blank source
-//        printTicket(ticketService, formatter, "", "GOA", 8);
+        printTicket(ticketService, formatter, "", "GOA", 8);
     }
 }

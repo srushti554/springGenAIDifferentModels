@@ -21,8 +21,8 @@ public class MapBasedRouteRepository implements RouteRepository{
 
     @Override
     public Optional<Route> findRoute(String source, String destination) {
-        String routeKey = (source.trim() + "|" + destination.trim()).toUpperCase();
-        String reverseRouteKey = (destination.trim() + "|" + source.trim()).toUpperCase();
+        String routeKey = (source + "|" + destination).toUpperCase();
+        String reverseRouteKey = (destination + "|" + source ).toUpperCase();
         Route route = routesMap.get(routeKey);
         if (route == null) {
             route = routesMap.get(reverseRouteKey);
@@ -32,8 +32,8 @@ public class MapBasedRouteRepository implements RouteRepository{
 
     @Override
     public void addOrUpdateRoute(Route route) {
-        String source = route.getFrom().trim().toUpperCase();
-        String destination = route.getTo().trim().toUpperCase();
+        String source = route.getFrom() .toUpperCase();
+        String destination = route.getTo() .toUpperCase();
         String key = source + "|" + destination;
         routesMap.put(key,route);
     }

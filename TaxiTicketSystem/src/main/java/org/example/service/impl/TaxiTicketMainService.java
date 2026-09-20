@@ -26,6 +26,6 @@ public class TaxiTicketMainService {
         Route route = rt.orElseThrow(()->new NoRouteFoundException(source,destination));
         double farePerPerson = fareCalculatorService.calculateFarePerPerson(route.getDistance());
         double totalFare = farePerPerson * travellers;
-        return new Ticket(source.trim().toUpperCase(),destination.trim().toUpperCase(), route.getDistance(), travellers,totalFare);
+        return new Ticket(source.toUpperCase(),destination.toUpperCase(), route.getDistance(), travellers,totalFare);
     }
 }
