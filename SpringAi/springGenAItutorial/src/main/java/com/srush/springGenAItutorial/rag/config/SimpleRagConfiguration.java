@@ -27,30 +27,30 @@ public class SimpleRagConfiguration {
     @Bean
     public TokenTextSplitter tokenTextSplitter(RagConfig ragConfig) {
         return TokenTextSplitter.builder()
-                .withChunkSize(ragConfig.getChunkProperties().getSize())
-                .withMinChunkSizeChars(ragConfig.getChunkProperties().getMinChunkSize())
-                .withMinChunkLengthToEmbed(ragConfig.getChunkProperties().getMinChunksToEmbed())
-                .withKeepSeparator(ragConfig.getChunkProperties().isKeepSeparted())
-                .withMaxNumChunks(ragConfig.getChunkProperties().getMaxNumChunks())
+                .withChunkSize(ragConfig.getChunk().getSize())
+                .withMinChunkSizeChars(ragConfig.getChunk().getMinChunkSize())
+                .withMinChunkLengthToEmbed(ragConfig.getChunk().getMinChunksToEmbed())
+                .withKeepSeparator(ragConfig.getChunk().isKeepSeparted())
+                .withMaxNumChunks(ragConfig.getChunk().getMaxNumChunks())
                 .build();
     }
-    @Bean
-    public SimpleVectorStore simpleVectorStore(EmbeddingModel embeddingModel, TokenTextSplitter tokenTextSplitter, RagConfig ragConfig) throws IOException {
-        var simpleVectorStore = SimpleVectorStore.builder(embeddingModel).build();
-        var vectorStoreFile = new File(VECTOR_STORE);
-        if(vectorStoreFile.exists() && !ragConfig.isForceRebuild()) {
-            log.info("Vector Store Exists, loding it from {}", VECTOR_STORE);
-            simpleVectorStore.load(vectorStoreFile);
-            return simpleVectorStore;
-        }
-        log.info("Creating new vector Store file at : {}",VECTOR_STORE);
-        var documents = loadDocuments();
-        var chunks = getChunks(documents,tokenTextSplitter);
-        simpleVectorStore.add(chunks);
-        simpleVectorStore.load(vectorStoreFile);
-        return  simpleVectorStore;
-
-    }
+//    @Bean
+//    public SimpleVectorStore simpleVectorStore(@Qualifier("ollamaEmbeddingModel") EmbeddingModel embeddingModel, TokenTextSplitter tokenTextSplitter, RagConfig ragConfig) throws IOException {
+//        var simpleVectorStore = SimpleVectorStore.builder(embeddingModel).build();
+//        var vectorStoreFile = new File(VECTOR_STORE);
+//        if(vectorStoreFile.exists() && !ragConfig.isForceRebuild()) {
+//            log.info("Vector Store Exists, loding it from {}", VECTOR_STORE);
+//            simpleVectorStore.load(vectorStoreFile);
+//            return simpleVectorStore;
+//        }
+//        log.info("Creating new vector Store file at : {}",VECTOR_STORE);
+//        var documents = loadDocuments();
+//        var chunks = getChunks(documents,tokenTextSplitter);
+//        simpleVectorStore.add(chunks);
+//        simpleVectorStore.save(vectorStoreFile);
+//        return  simpleVectorStore;
+//
+//    }
 
     private List<Document> loadDocuments() throws IOException {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();

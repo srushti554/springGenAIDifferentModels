@@ -26,6 +26,8 @@ public class AIProviderConfig {
     @Bean
     @ConditionalOnProperty(prefix = "app.ai", name = "provider", havingValue = "ollama",matchIfMissing = true)
     ChatClient ollamaChatClient(OllamaChatModel ollamaChatModel) {
-        return ChatClient.builder(ollamaChatModel).build();
+        return ChatClient.builder(ollamaChatModel)
+                .defaultAdvisors(new TokenGenerationAdvisor())
+                .build();
     }
 }

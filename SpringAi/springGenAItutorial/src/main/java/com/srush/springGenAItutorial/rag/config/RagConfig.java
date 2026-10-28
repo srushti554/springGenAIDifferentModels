@@ -13,7 +13,7 @@ public class RagConfig {
     private boolean forceRebuild;
     private int topK;
     private double similarityThreshold;
-    private ChunkProperties chunkProperties;
+    private ChunkProperties chunk;
 
     @Data
     public static class ChunkProperties {
